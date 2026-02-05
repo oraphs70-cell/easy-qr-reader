@@ -86,8 +86,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   Future<void> _onDetect(BarcodeCapture capture) async {
-    // 디버깅: 호출 빈도 확인
-    // debugPrint('OnDetect: $_isScanning');
+    // 디버깅: 호출 빈도 확인 (활성화)
+    debugPrint('OnDetect called! isScanning: $_isScanning');
     
     if (!_isScanning) return; 
 
