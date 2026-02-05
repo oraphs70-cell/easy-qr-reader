@@ -130,10 +130,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               ).then((_) {
                 debugPrint('Returned from ResultScreen');
                 if (mounted) {
-                  // 약간의 지연 후 스캔 재개 (중복 방지)
-                  Future.delayed(const Duration(milliseconds: 500), () {
+                  // 스캔 재개 - 웹에서 확실히 작동하도록
+                  Future.delayed(const Duration(milliseconds: 300), () {
                     if (mounted) {
-                       setState(() => _isScanning = true);
+                      setState(() => _isScanning = true);
+                      // 스캐너 명시적 재시작
+                      try {
+                        controller.start();
+                      } catch (e) {
+                        debugPrint('Scanner restart error: $e');
+                      }
                     }
                   });
                 }
