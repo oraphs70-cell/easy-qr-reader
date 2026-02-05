@@ -143,12 +143,14 @@ class ResultScreen extends StatelessWidget {
     
     final Uri url = Uri.parse(urlString);
     
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    } else {
+    try {
+      // 웹에서는 platformDefault 사용
+      await launchUrl(url, mode: LaunchMode.platformDefault);
+    } catch (e) {
+      debugPrint('URL launch error: $e');
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('사이트를 열 수 없습니다.')),
+          SnackBar(content: Text('사이트를 열 수 없습니다: $urlString')),
         );
       }
     }
